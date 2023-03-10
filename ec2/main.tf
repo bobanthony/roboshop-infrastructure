@@ -1,6 +1,6 @@
 resource "aws_instance" "ec2" {
   ami                    = "ami-0a017d8ceb274537d"
-  instance_type          = "t3.micro"
+  instance_type          = var.instance_type
   vpc_security_group_ids = [var.component]
   tags = {
     name = "var.component"
@@ -17,9 +17,7 @@ resource "null_resource" "provisioner" {
     }
 
     inline = [
-      "git clone https://github.com/bobanthony/roboshop-shell",
-      "cd roboshop-shell",
-      "sudo bash ${var.component}.sh"
+      "ansible-pull -i localhost, -U https://github.com/bobanthony/roboshop-ansible roboshop.yml -e role_name=${var.component}"
     ]
   }
 }

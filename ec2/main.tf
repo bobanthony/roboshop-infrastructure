@@ -1,3 +1,20 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 data "aws_caller_identity" "current" {}
 
 data "aws_ami" "ami" {
@@ -7,17 +24,12 @@ data "aws_ami" "ami" {
 }
 
 
-
-
-
-
 resource "aws_instance" "ec2" {
   ami                    = data.aws_ami.ami.image_id
   instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.sg.id]
-  iam_instance_profile   = "${var.env}-${var.component}-role"
-  tags                   = {
-    name                 = var.component
+  tags = {
+    Name = var.component
   }
 }
 
@@ -25,41 +37,58 @@ resource "null_resource" "provisioner" {
   provisioner "remote-exec" {
 
     connection {
-      host       = aws_instance.ec2.public_ip
-      user       = "centos"
-      password   = "DevOps321"
+      host     = aws_instance.ec2.public_ip
+      user     = "centos"
+      password = "DevOps321"
     }
 
     inline = [
-      "ansible-pull -i localhost, -U https://github.com/bobanthony/roboshop-ansible roboshop.yml -e  role_name=${var.component} -e env=${var.env}"
+      "ansible-pull -i localhost, -U https://github.com/bobanthony/roboshop-ansible roboshop.yml -e role_name=${var.component}"
     ]
+
   }
+
 }
+
 resource "aws_security_group" "sg" {
   name        = "${var.component}-${var.env}-sg"
   description = "Allow TLS inbound traffic"
 
-
   ingress {
-    description      = "ALL"
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-
+    description = "ALL"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
+
   tags = {
     Name = "${var.component}-${var.env}-sg"
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

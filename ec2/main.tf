@@ -2,8 +2,8 @@ resource "aws_instance" "ec2" {
   ami                    = "ami-0a017d8ceb274537d"
   instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.sg.id]
-  tags = {
-    name = var.component
+  tags                   = {
+    name                 = var.component
   }
 }
 
@@ -11,9 +11,9 @@ resource "null_resource" "provisioner" {
   provisioner "remote-exec" {
 
     connection {
-      host = aws_instance.ec2.public_ip
-      user = "centos"
-      password = "DevOps321"
+      host       = aws_instance.ec2.public_ip
+      user       = "centos"
+      password   = "DevOps321"
     }
 
     inline = [

@@ -15,28 +15,41 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 data "aws_caller_identity" "current" {}
 
-data "aws_ami_ids" "ami" {
-
+data "aws_ami" "ami" {
+  most_recent = true
   name_regex  = "devops-practice-with-ansible"
   owners      = [data.aws_caller_identity.current.account_id]
 }
 
+
 resource "aws_instance" "ec2" {
-  ami                    = data.aws_ami_ids.ami.id
+  ami                    = "ami-0a017d8ceb274537d"
   instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.sg.id]
-  tags                   = {
+  tags = {
     Name = var.component
   }
 }
-
-
-
-
-
-
 resource "null_resource" "provisioner" {
   provisioner "remote-exec" {
 

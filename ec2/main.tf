@@ -37,7 +37,7 @@ data "aws_caller_identity" "current" {}
 
 data "aws_ami" "ami" {
   most_recent = true
-  name_regex  = "devops-practice-with-ansible"
+  name_regex  = "devops-ansible"
   owners      = [data.aws_caller_identity.current.account_id]
 }
 
@@ -100,7 +100,9 @@ resource "aws_route53_record" "record" {
 variable "component" {}
 variable "instance_type" {}
 
-variable "env" {}
+variable "env" {
+  default = dev
+}
 
 
 

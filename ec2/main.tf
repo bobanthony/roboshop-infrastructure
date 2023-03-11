@@ -43,7 +43,7 @@ data "aws_ami" "ami" {
 
 
 resource "aws_instance" "ec2" {
-  ami                    = "ami-0a017d8ceb274537d"
+  ami                    = data.aws_ami.ami.image_id
   instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.sg.id]
   tags = {
@@ -94,13 +94,15 @@ resource "aws_route53_record" "record" {
   zone_id = "Z00739661SEOHEMKPHEUL"
   name    = "${var.component}-dev.learndevopsb71solutions.site"
   type    = "A"
-  ttl     = 300
+  ttl     = 30
   records = [aws_instance.ec2.private_ip]
 }
 variable "component" {}
 variable "instance_type" {}
 
-variable "env" {}
+variable "env" {
+  default = "dev"
+}
 
 
 

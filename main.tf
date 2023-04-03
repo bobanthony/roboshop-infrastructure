@@ -1,6 +1,4 @@
-variable "vpc" {
-  default = ""
-}
+
 module "vpc" {
   source = "git::https://github.com/bobanthony/tf-module-vpc.git"
   env    = var.env

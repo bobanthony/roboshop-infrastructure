@@ -2,13 +2,15 @@ env = "dev"
 
 vpc = {
   main = {
-    vpc_cidr       = "10.0.0.0/16"
+    vpc_cidr = "10.0.0.0/16"
+
     public_subnets = {
       public = {
         name       = "public"
         cidr_block = ["10.0.0.0/24", "10.0.1.0/24"]
       }
     }
+
     private_subnets = {
       web = {
         name       = "web"
@@ -23,8 +25,6 @@ vpc = {
         cidr_block = ["10.0.6.0/24", "10.0.7.0/24"]
       }
     }
+
   }
 }
-
-
-

@@ -1,6 +1,9 @@
+variable "vpc" {
+  default = ""
+}
 module "vpc" {
   source = "git::https://github.com/bobanthony/tf-module-vpc.git"
-  env  = var.env
+  env    = var.env
 
   for_each = var.vpc
   vpc_cidr = each.value["vpc_cidr"]

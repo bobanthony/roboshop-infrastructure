@@ -17,12 +17,12 @@ variable "secrets" {}
 
 resource "aws_ssm_parameter" "jenkins_user" {
   name  = "jenkins_user"
-  type  = "strig"
+  type  = "String"
   value = "admin"
 }
 
 resource "aws_ssm_parameter" "jenkins_pass" {
   name  = "jenkins_pass"
-  type  = "securestrig"
+  type  = "Securestring"
   value = "admin123"
 }

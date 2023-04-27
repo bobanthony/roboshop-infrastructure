@@ -23,6 +23,6 @@ resource "aws_ssm_parameter" "jenkins_user" {
 
 resource "aws_ssm_parameter" "jenkins_pass" {
   name  = "jenkins_pass"
-  type  = "Securestring"
+  type  = "SecureString"
   value = "admin123"
 }
